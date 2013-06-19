@@ -1,0 +1,61 @@
+<div id="sign_up2">
+  <div class="container">
+    <div class="row login">
+<%= form_for @contact do |f| %>
+
+  <div class="span5 left_box">
+    <h4>Ricardo Express</h4>
+    <h5>Fique tranquilo, atendemos a sua urgência!</h5>
+    <div class="perk_box">
+      <div class="perk">
+        <span class="icos"></span>
+        <p>Em breve lançaremos nosso site oficial.</p>
+        <p>Enquanto isso entre em <strong>contato</strong> conosco e solicite já um orçamento.</p>
+        <p>Telefone: (62) 3092 - 5572 | (62) 9107 - 6663 | (61) 9241 - 0580 </p>
+        <br />
+        <p>Se preferir use o formulário ao lado. <br /> Em breve lhe responderemos e lhe avisaremos do lançamento do site</p>
+      </div>
+    </div>
+  </div>  
+
+  <!-- Inicio do formulário --> 
+  <div class="span6 signin_box">
+    <div class="box">
+      <div class="box_cont">
+        <div class="form">
+          <!--Notificações -->
+          <% if flash[:notice] %>
+            <p class="success alert alert-success" id="notificationSuccess"><%=h flash[:notice] %><button class="close" data-dismiss="alert">×</button></p>
+          <% end %>
+          <!-- Fim das notificações -->            
+          <h2 style="color:#2D66BD">Formulário</h2>
+          <%= f.text_field :name, :placeholder => "Nome", :required => true %>
+          <%= f.text_field :email, :placeholder => "Email", :required => true, :uniqueness => true, :onblur=>"validaEmail()" %>
+          <%= f.text_field :phone, :placeholder => "Telefone", :required => true %>
+          <%= f.select :subject, ([["Dúvidas"], ["Sugestões"], ["Orçamento"], ["Reclamações"]]), :prompt => 0, :placeholder => "Assunto", :required => true %>
+          <%= f.text_area :message, :placeholder => "Escreva sua mensagem aqui...", :required => true  %>
+          <%= f.submit 'Enviar sua mensagem', :class => 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+  <!-- Fim do formulário -->
+<% end %>
+
+<script type="text/javascript">
+  function validaEmail(){
+    obj = document.getElementById('contact_email');
+    txt = obj.value;
+    if ((txt.length != 0) && ((txt.indexOf("@") < 1) || (txt.indexOf('.') < 7))){
+      alert('Email incorreto');
+      obj.focus();
+    }
+  }
+
+  jQuery(function($){ 
+    $("#contact_phone").mask("(99) 9999-9999");
+  });
+</script>

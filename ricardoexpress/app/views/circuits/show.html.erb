@@ -1,0 +1,23 @@
+<%- model_class = Circuit -%>
+<div class="page-header">
+  <h1>Rota</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:origin_city) %>:</strong></dt>
+  <dd><%= @circuit.origin_city %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:destination_city) %>:</strong></dt>
+  <dd><%= @circuit.destination_city %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to 'Voltar',
+              circuits_path, :class => 'btn icon-arrow-left'  %>
+  <%= link_to 'Editar',
+              edit_circuit_path(@circuit), :class => 'btn icon-edit' %>
+  <%= link_to 'Excluir',
+              circuit_path(@circuit),
+              :method => 'delete',
+              :confirm => 'Tem certeza que deseja excluir esta rota ?',
+              :class => 'btn btn-danger icon-trash' %>
+</div>

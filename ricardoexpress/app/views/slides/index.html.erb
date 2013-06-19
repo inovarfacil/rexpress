@@ -1,0 +1,53 @@
+<%- model_class = Slide -%>
+<div class="page-header">
+  <h1>Slides</h1>
+</div>
+
+<!--Notificações -->
+<% if flash[:error] %>
+  <p class="error alert alert-error" id="notificationError"><%=h flash[:error] %><button class="close" data-dismiss="alert">×</button></p>
+<% end %>
+<% if flash[:success] %>
+  <p class="success alert alert-success" id="notificationSuccess"><%=h flash[:success] %><button class="close" data-dismiss="alert">×</button></p>
+<% end %>
+<!-- Fim das notificações --> 
+
+
+<!-- Inicio Tabela de exibição dos dados -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:image) %></th>
+      <th><%= model_class.human_attribute_name(:background) %></th>
+      <th><%= model_class.human_attribute_name(:text) %></th>
+      <th>Opções</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @slides.each do |slide| %>
+      <tr>
+        <td><%= slide.name %></td>
+        <td><%= slide.image %></td>
+        <td><%= slide.background %></td>
+        <td><%= slide.text %></td>
+        <td>
+          <%= link_to 'Exibir',
+                      slide, :class => 'btn btn-small btn-info icon-eye-open' %>          
+          <%= link_to 'Editar',
+                      edit_slide_path(slide), :class => 'btn btn-small icon-edit' %>
+          <%= link_to 'Excluir',
+                      slide_path(slide),
+                      :method => :delete,
+                      :confirm => 'Tem certeza que deseja excluir este slide?',
+                      :class => 'btn btn-small btn-danger icon-trash' %>
+        </td> 
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- Fim Tabela de exibição dos dados -->
+
+<!-- Inicio Link para criar novo registro -->
+<%= link_to 'Novo Slide', new_slide_path, :class => 'btn btn-primary' %>
+<!-- Fim Link para criar novo registro -->   

@@ -1,0 +1,23 @@
+<%- model_class = Servicetype -%>
+<div class="page-header">
+  <h1>Tipo de Serviço</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @servicetype.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:prince) %>:</strong></dt>
+  <dd><%= number_to_currency(@servicetype.prince, :unit => 'R$', :separator => ',', :delimiter => '.', :negative_format => "%u-%n") %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to 'Voltar',
+              servicetypes_path, :class => 'btn icon-arrow-left'  %>
+  <%= link_to 'Editar',
+              edit_servicetype_path(@servicetype), :class => 'btn icon-edit' %>
+  <%= link_to 'Excluir',
+              service_path(@servicetype),
+              :method => 'delete',
+              :confirm => 'Tem certeza que deseja excluir este usuário?',
+              :class => 'btn btn-danger icon-trash' %>
+</div>

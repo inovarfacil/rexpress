@@ -1,0 +1,41 @@
+<%- model_class = About -%>
+<div class="page-header">
+  <h1>Empresa</h1>
+</div>
+
+<!-- Inicio Tabela de exibição dos dados -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:slug) %></th>
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:description) %></th>
+      <th>Criado em</th>
+      <th>Opções</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @abouts.each do |about| %>
+      <tr>
+        <td><%= about.slug %></td>
+        <td><%= about.title %></td>
+        <td><%= about.description %></td>
+        <td><%=l about.created_at %></td>
+        <td>
+          <%= link_to 'Editar',
+                      edit_about_path(about), :class => 'btn btn-small icon-edit' %>
+          <%= link_to 'Excluir',
+                      about_path(about),
+                      :method => :delete,
+                      :confirm => 'Tem certeza que deseja excluir este contato?',
+                      :class => 'btn btn-small btn-danger icon-trash' %>
+        </td>        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- Fim Tabela de exibição dos dados -->
+
+<!-- Inicio Link para criar novo registro -->
+<%= link_to 'Nova Empresa', new_about_path, :class => 'btn btn-primary' %>
+<!-- Fim Link para criar novo registro -->              
