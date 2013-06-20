@@ -1,48 +1,75 @@
-require 'rvm/capistrano'
-require 'bundler/capistrano'
+set :user, "ricardoexpress" #to change
+set :host, "198.199.104.205" #to change
+set :domain, "rexpress.com.br" #to change
+set :application, "ricardoexpress" #to change
+set :deploy_to, "/home/#{user}/public/" #to change
 
-ssh_options[:forward_agent] = true
-set :deploy_via, :remote_cache
-set :use_sudo, false
-set :user, "rexpress"
-set :deploy_to, "/home/rexpress"
-set :rails_env, "production"
-set :rvm_type, :system
+set :repository, "git://github.com/inovarfacil/rexpress.git" #to change
+set :branch,     "origin/master"
 
-set :keep_releases, 3
-after "deploy:restart", "deploy:cleanup"
+# =============================================================================
 
-namespace :deploy do
-  desc "Symlink shared/* files"
-  task :symlink_shared, :roles => :app do
-    run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-  end
+role :web, host
+role :app, host
+role :db,  host
+
+set :scm, :git
+
+set :current_release, 
+
+ssh_options[:username] = user
+ssh_options[:paranoid] = false
+
+# =============================================================================
+
+desc "send config files to server"
+task :before_setup do
+  run "test -d #{deploy_to}/etc || mkdir -m 755 #{deploy_to}/etc"
+  upload File.join(File.dirname(__FILE__), "templates/database.yml"), "#{deploy_to}/etc/database.yml"
 end
 
-after "deploy:update_code", "deploy:symlink_shared"
+namespace :deploy do
+  desc "Restart with Passenger"
+  task :restart, :roles => :app do
+    run "touch #{deploy_to}/tmp/restart.txt"
+  end
+ 
+  desc "Setup a GitHub-style deployment."
+  task :setup, :except => { :no_release => true } do
+    run "git clone #{repository} #{current_path}"
+    run "test -d #{current_path}/tmp || mkdir -m 755 #{current_path}/tmp"
+    run "test -d #{current_path}/db || mkdir -m 755 #{current_path}/db"
+  end
+ 
+  desc "Update the deployed code."
+  task :update_code, :except => { :no_release => true } do
+    run "cd #{current_path}; git fetch origin; git reset --hard #{branch}"
+  end
+ 
+  desc "check if the configurations files are present"
+  task :symlink do
+    on_rollback {}
+    run <<-CMD
+      rm -rf #{current_path}/log #{current_path}/public/system #{current_path}/tmp/pids #{current_path}/config/database.yml &&
+      ln -s #{shared_path}/log #{current_path}/log &&
+      ln -s #{shared_path}/system #{current_path}/public/system &&
+      ln -s #{shared_path}/pids #{current_path}/tmp/pids &&
+      ln -s #{deploy_to}/etc/database.yml #{current_path}/config/database.yml &&
+      cd #{current_path} && rake db:migrate RAILS_ENV=production
+    CMD
+  end
 
-#set :application, "set your application name here"
-#set :repository,  "set your repository location here"
+  namespace :rollback do
+    task :default do
+      revision
+      restart
+    end
+    
+    desc "Rollback a single commit."
+    task :revision, :except => { :no_release => true } do
+      set :branch, "HEAD^"
+      default
+    end
+  end
 
-# set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
-
-#role :web, "your web-server here"                          # Your HTTP server, Apache/etc
-#role :app, "your app-server here"                          # This may be the same as your `Web` server
-#role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
-#role :db,  "your slave db-server here"
-
-# if you want to clean up old releases on each deploy uncomment this:
-# after "deploy:restart", "deploy:cleanup"
-
-# if you're still using the script/reaper helper you will need
-# these http://github.com/rails/irs_process_scripts
-
-# If you are using Passenger mod_rails uncomment this:
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-# end
+end
