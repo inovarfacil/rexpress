@@ -42,6 +42,8 @@ gem 'jquery-rails'
 
 group :development do 
   gem 'annotate', :git => 'https://github.com/ctran/annotate_models.git'
+  gem 'capistrano'
+  gem 'rvm-capistrano'
 end
 
 gem 'delocalize', '0.2.6'
