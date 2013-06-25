@@ -1,0 +1,56 @@
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => 'form-horizontal' }) do |f| %>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+
+    <div class="span2">
+    </div>
+    <div class="span10">
+      <div class="span12">
+		
+				<% if alert != nil %>
+				<div>
+				  <div class="error"><%= alert %></div>
+				</div>
+				<% end %>  
+				<% if notice != nil %>
+				<div>
+				  <div class="error"><%= notice %></div>
+				</div>
+				<% end %>
+      	<div class="control-group">
+			    <%= f.label :email, :class => 'control-label' %>
+			    <div class="controls">
+			      <%= f.email_field :email, :class => 'span5', :autofocus => true %>
+			    </div>
+			  </div>
+
+			  <div class="control-group">
+			    <%= f.label :password, :class => 'control-label' %>
+			    <div class="controls">
+			      <%= f.password_field :password, :class => 'span5' %>
+			    </div>
+			  </div>				
+			  <div class="span3"></div>
+				<% if devise_mapping.rememberable? -%>
+			    <div class="span4"> 
+			    	<%= f.check_box :remember_me, :style => "float:left;" %>
+			    	<%= f.label :remember_me %>
+			    </div>
+			  <% end %>
+			  <div class="span4"></div>
+				<div class="span3"></div>
+			  <div class="span3">
+			  	<%= f.submit "Acessar", :class => 'btn btn-block btn-primary' %>
+			  </div>
+
+			  <%#= render "devise/shared/links" %>
+
+      </div>
+    </div>
+    <div class="span2">
+    </div>
+  </div>
+</div>		
+
+<% end %>

@@ -1,0 +1,45 @@
+<%- model_class = Circuit -%>
+<div class="page-header">
+  <h1>Rotas</h1>
+</div>
+
+<!-- Inicio Tabela de exibição dos dados -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:origin_city) %></th>
+      <th><%= model_class.human_attribute_name(:destination_city) %></th>
+      <th>Criado em</th>
+      <th>Opções</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @circuits.each do |circuit| %>
+      <tr>
+        <td><%= circuit.origin_city %></td>
+        <td><%= circuit.destination_city %></td>
+        <td><%= circuit.created_at %></td>
+        <td>
+          <%= link_to 'Editar',
+                      edit_circuit_path(circuit), :class => 'btn btn-small icon-edit' %>
+          <%= link_to 'Excluir',
+                      circuit_path(circuit),
+                      :method => :delete,
+                      :confirm => 'Tem certeza que deseja excluir esta rota?',
+                      :class => 'btn btn-small btn-danger icon-trash' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- Fim Tabela de exibição dos dados -->
+
+<!-- Paginação dos dados -->
+<div class="pagination">
+    <%= paginate @circuits %>
+</div>
+<!-- Fim Paginação dos dados -->
+
+<!-- Inicio Link para criar novo registro -->
+<%= link_to 'Nova Rota', new_circuit_path, :class => 'btn btn-primary' %>
+<!-- Fim Link para criar novo registro -->

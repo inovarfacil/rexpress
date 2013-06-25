@@ -1,0 +1,39 @@
+<%= form_for @role, :html => { :class => 'well form-horizontal' } do |f| %>
+  <% if @role.errors.any? %>  
+  <div id="errorExplanation" class="alert alert-error">  
+    <h2>Para salvar a permissão você deve resolver <%= pluralize_without_count("o", @role.errors.count) %> <%= pluralize_without_count("erro", @role.errors.count) %> encontrados:</h2>  
+    <ul>  
+    <% @role.errors.full_messages.each do |msg| %>  
+      <li><%= msg %></li>  
+    <% end %>  
+    </ul>  
+  </div>  
+  <% end %>  
+  
+  <!--Notificações -->
+  <% if flash[:error] %>
+    <p class="error alert alert-error" id="notificationError"><%=h flash[:error] %><button class="close" data-dismiss="alert">×</button></p>
+  <% end %>
+  <% if flash[:success] %>
+    <p class="success alert alert-success" id="notificationSuccess"><%=h flash[:success] %><button class="close" data-dismiss="alert">×</button></p>
+  <% end %>
+  <!-- Fim das notificações -->  
+
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'span3' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :class => 'span5' %>
+    </div>
+  </div>  
+
+  <div class="form-actions">
+    <%= f.submit 'Gravar', :class => 'btn btn-primary' %> 
+    <%= link_to 'Cancelar', roles_path, :class => 'btn' %>
+  </div>  
+<% end %>

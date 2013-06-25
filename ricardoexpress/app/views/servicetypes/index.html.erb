@@ -1,0 +1,60 @@
+<%- model_class = Servicetype -%>
+<div class="page-header">
+  <h1>Tipos de Serviços</h1>
+</div>
+
+<!-- Inicio Fieldset para fazer a pesquisa dos dados -->
+<fieldset style="border: 1px solid #CECECE; padding: 10px; margin-bottom: 10px;" class="item">
+  <h3>Pesquisar</h3>
+  </br>
+  <%= search_form_for @q, :html=>{:class=>"form-horizontal"} do |f| %>
+    <div class="control-group">
+        <%= f.label "Nome" %>
+        <%= f.text_field :name_cont, :class => 'span5' %>
+    </div>
+    <%= f.submit "Pesquisar", :name => nil, :class=>"btn icon-search" %>
+    <%= link_to 'Limpar', servicetypes_path %>        
+  <% end %>
+</fieldset>
+<!-- Fim Fieldset para fazer a pesquisa dos dados -->
+
+<!-- Inicio Tabela de exibição dos dados -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:prince) %></th>
+      <th>Criado em </th>
+      <th>Opções</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @servicetypes.each do |servicetype| %>
+      <tr>
+        <td><%= servicetype.name %></td>
+        <td><%= number_to_currency(servicetype.prince, :unit => 'R$', :separator => ',', :delimiter => '.', :negative_format => "%u-%n") %></td>        
+        <td><%= servicetype.created_at %></td>
+        <td>
+          <%= link_to 'Editar',
+                      edit_servicetype_path(servicetype), :class => 'btn btn-small icon-edit' %>
+          <%= link_to 'Excluir',
+                      servicetype_path(servicetype),
+                      :method => :delete,
+                      :confirm => 'Tem certeza que deseja excluir este tipo de serviço?',
+                      :class => 'btn btn-small btn-danger icon-trash' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- Fim Tabela de exibição dos dados -->
+
+<!-- Paginação dos dados -->
+<div class="pagination">
+    <%= paginate @servicetypes %>
+</div>
+<!-- Fim Paginação dos dados -->
+
+<!-- Inicio Link para criar novo registro -->
+<%= link_to 'Novo Tipo de Serviço', new_servicetype_path, :class => 'btn btn-primary' %>
+<!-- Fim Link para criar novo registro -->

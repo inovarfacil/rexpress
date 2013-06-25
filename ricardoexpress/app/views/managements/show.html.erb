@@ -1,0 +1,37 @@
+<%- model_class = Management -%>
+<div class="page-header">
+  <h1>Configuração</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:site_name) %>:</strong></dt>
+  <dd><%= @management.site_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:tagline) %>:</strong></dt>
+  <dd><%= @management.tagline %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:keywords) %>:</strong></dt>
+  <dd><%= @management.keywords %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:icon) %>:</strong></dt>
+  <dd><%= image_tag @management.icon_url(:thumb) %></dd><br>
+  <dt><strong><%= model_class.human_attribute_name(:logo) %>:</strong></dt>
+  <dd><%= image_tag @management.logo_url(:thumb) %></dd><br>
+  <dt><strong><%= model_class.human_attribute_name(:facebook) %>:</strong></dt>
+  <dd><%= @management.facebook %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:twitter) %>:</strong></dt>
+  <dd><%= @management.twitter %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:linkedin) %>:</strong></dt>
+  <dd><%= @management.linkedin %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:youtube) %>:</strong></dt>
+  <dd><%= @management.youtube %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to 'Voltar',
+              managements_path, :class => 'btn icon-arrow-left'  %>
+  <%= link_to 'Editar',
+              edit_management_path(@management), :class => 'btn icon-edit' %>
+  <%= link_to 'Excluir',
+              management_path(@management),
+              :method => 'delete',
+              :confirm => 'Tem certeza que deseja excluir este usuário?',
+              :class => 'btn btn-danger icon-trash' %>
+</div>

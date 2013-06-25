@@ -1,0 +1,54 @@
+<%= form_for @contact do |f| %>
+  <% if @contact.errors.any? %>  
+  <div id="errorExplanation" class="alert alert-error">  
+    <h2>Para salvar o contato você deve resolver <%= pluralize_without_count("o", @contact.errors.count) %> <%= pluralize_without_count("erro", @contact.errors.count) %> encontrados:</h2>  
+    <ul>  
+    <% @contact.errors.full_messages.each do |msg| %>  
+      <li><%= msg %></li>  
+    <% end %>  
+    </ul>  
+  </div>  
+  <% end %>  
+
+  <!--Notificações -->
+  <% if flash[:notice] %>
+    <p class="success alert alert-success" id="notificationSuccess"><%=h flash[:notice] %><button class="close" data-dismiss="alert">×</button></p>
+  <% end %>
+  <!-- Fim das notificações -->  
+
+  <!-- Inicio do formulário -->  
+  <div class="row form">
+    <div class="span6 box">
+        <%= f.text_field :name,  :placeholder => "Nome", :required => true %>
+        <%= f.text_field :email,  :placeholder => "Email", :required => true, :uniqueness => true, :onblur=>"validaEmail()" %>
+        <%= f.text_field :phone, :placeholder => "Telefone", :required => true %>
+        <%= f.select :subject, ([["Dúvidas"], ["Sugestões"], ["Orçamento"], ["Reclamações"]]), :prompt => 0, :class => 'subject', :placeholder => "Assunto", :required => true %>
+
+    </div>
+    <div class="span6 box box_r">
+        <%= f.text_area :message, :placeholder => "Escreva sua mensagem aqui...", :required => true  %>
+    </div>
+</div>
+
+<div class="row submit">
+    <div class="span3 right">
+        <%= f.submit 'Enviar sua mensagem', :class => 'btn btn-primary' %>
+    </div>
+</div>
+  <!-- Fim do formulário -->
+<% end %>
+
+<script type="text/javascript">
+  function validaEmail(){
+    obj = document.getElementById('contact_email');
+    txt = obj.value;
+    if ((txt.length != 0) && ((txt.indexOf("@") < 1) || (txt.indexOf('.') < 7))){
+      alert('Email incorreto');
+      obj.focus();
+    }
+  }
+
+  jQuery(function($){ 
+    $("#contact_phone").mask("(99) 9999-9999");
+  });
+</script>

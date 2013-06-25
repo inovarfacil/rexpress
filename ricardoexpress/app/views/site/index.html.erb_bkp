@@ -1,0 +1,206 @@
+<!-- Inicio Slide -->
+<section id="feature_slider" class="">
+<!-- 
+Each slide is composed by <img> and .info
+- .info's position is customized with css in index.css
+- each <img> parallax effect is declared by the following params inside its class:
+
+example: class="asset left-472 sp600 t120 z3"
+left-472 means left: -472px from the center
+sp600 is speed transition
+t120 is top to 120px
+z3 is z-index to 3
+Note: Maintain this order of params
+
+For the backgrounds, you can combine from the bgs folder
+-->
+<article class="slide" id="showcasing" style="background: url('assets/landscape.png') repeat-x top center;">
+
+    <%= image_tag "macbook.png", :class => "asset left-30 sp600 t120 z1" %>
+    <div class="info">
+        <h2>Beautiful theme for showcasing your works.</h2>
+    </div>
+</article>
+<article class="slide" id="ideas" style="background: url('assets/aqua.jpg') repeat-x top center;">
+    <div class="info">
+        <h2>We love to turn ideas into beautiful things.</h2>
+    </div>
+    <%= image_tag "left.png", :class => "asset left-480 sp600 t260 z1" %>
+    <%= image_tag "middle.png", :class => "asset left-210 sp600 t213 z2" %>
+    <%= image_tag "right.png", :class => "asset left60 sp600 t260 z1" %>
+</article>
+<article class="slide" id="tour" style="background: url('assets/color-splash.jpg') repeat-x top center;">
+    <%= image_tag "ipad.png", :class => "asset left-472 sp650 t210 z3" %>
+    <%= image_tag "iphone.png", :class => "asset left-365 sp600 t270 z4" %>
+    <%= image_tag "desktop.png", :class => "asset left-350 sp450 t135 z2" %>
+    <%= image_tag "macbook.png", :class => "asset left-185 sp550 t220 z1" %>
+    <div class="info">
+        <h2>Fully Responsive theme</h2>
+        <a href="features.html">TOUR THE PRODUCT</a>
+    </div>
+</article>
+<article class="slide" id="responsive" style="background: url('assets/indigo.jpg') repeat-x top center;">
+    <%= image_tag "html5.png", :class => "asset left-472 sp600 t120 z3" %>
+    <%= image_tag "css3.png", :class => "asset left-190 sp500 t120 z2" %>
+    <div class="info">
+        <h2>
+            Responsive <strong>HTML5 & CSS3</strong>
+            Theme
+        </h2>                
+    </div>
+</article>        
+</section>
+<!-- Fim Slide -->  
+
+<div id="showcase">
+    <div class="caixa">
+        <div class="section_header">
+            <h3>Nossos serviços</h3>
+        </div>            
+        <div class="row feature_wrapper">
+            <!-- Features Row -->
+            <div class="features_op1_row">
+                <!-- Feature -->
+                <% services01 = Service.find(1) unless services01 %>
+                <% unless services01.blank? %>                   
+                    <div class="span4 feature">
+                        <div class="img_box">
+                            <%= link_to({:controller => "services", :action => "servico", :id =>1}) do %>
+                                <%= image_tag "service1.png" %>
+                                <span class="circle"> 
+                                <span class="plus">&#43;</span>
+                                </span>
+                            <% end %>
+                        </div>
+                        <div class="text">                            
+                            <h6><%= services01.name unless services01.name.blank? %></h6>
+                            <p>
+                                <%= services01.description unless services01.description.blank? %>
+                            </p>
+                        </div>
+                    </div>
+             
+                <% end %>
+               <!-- Feature -->
+                <% services02 = Service.find(2) if services02 %>
+                <% unless services02.blank? %>
+                    <div class="span4 feature">
+                        <div class="img_box">
+                            <%= link_to({:controller => "services", :action => "servico", :id =>2}) do %>
+                                <%= image_tag "service2.png" %>
+                                <span class="circle"> 
+                                <span class="plus">&#43;</span>
+                                </span>
+                            <% end %>
+                        </div>
+                        <div class="text">                            
+                            <h6><%= services02.name unless services02.name.blank? %></h6>
+                            <p>
+                                <%= services02.description unless services02.description.blank? %>
+                            </p>
+                        </div>
+                    </div>             
+                <% end %>
+                <!-- Feature -->
+                <% services03 = Service.find(3) if services03 %>
+                <% unless services03.blank? %>
+                    <div class="span4 feature">
+                        <div class="img_box">
+                            <%= link_to({:controller => "services", :action => "servico", :id =>3}) do %>
+                                <%= image_tag "service3.png" %>
+                                <span class="circle"> 
+                                <span class="plus">&#43;</span>
+                                </span>
+                            <% end %>
+                        </div>
+                        <div class="text">                            
+                            <h6><%= services03.name unless services03.name.blank? %></h6>
+                            <p>
+                                <%= services03.description unless services03.description.blank? %>
+                            </p>
+                        </div>
+                    </div>             
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="features">
+    <div class="caixa">
+        <div class="section_header">
+            <h3>Features</h3>
+        </div> 
+        <div class="row feature">
+            <div class="span6">
+                <%= image_tag "showcase1.png" %>
+            </div>
+            <div class="span6 info">
+                <h3>
+                    <%= image_tag "features-ico1.png" %>
+                    Beautiful on all devices
+                </h3>
+                <p>
+                    There are many variations of passages of Lorem Ipsum available, but the randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
+                </p>
+            </div>
+        </div>
+        <div class="row feature ss">
+            <div class="span6 info">
+                <h3>
+                    <%= image_tag "features-ico2.png" %>
+                    Blog page included
+                </h3>
+                <p>
+                    There are many variations of passages of Lorem Ipsum available, but the randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
+                </p>
+            </div>
+            <div class="span6">
+                <%= image_tag "showcase2.png", :class => "pull-right" %>
+            </div>
+        </div>
+        <div class="row feature ss">
+            <div class="span6">
+                <%= image_tag "showcase3.png" %>
+            </div>
+            <div class="span6 info">
+                <h3>
+                    <%= image_tag "features-ico3.png" %>
+                    Simple and clean coming soon page
+                </h3>
+                <p>
+                    There are many variations of passages of Lorem Ipsum available, but the randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="clients">
+    <div class="caixa">
+        <div class="section_header">
+            <h3>Clients</h3>
+        </div>
+        <div class="row">
+            <div class="span2 client">
+                <div class="img client1"></div>
+            </div>
+            <div class="span2 client">
+                <div class="img client2"></div>
+            </div>
+            <div class="span2 client">
+                <div class="img client3"></div>
+            </div>
+            <div class="span2 client">
+                <div class="img client1"></div>
+            </div>
+            <div class="span2 client">
+                <div class="img client2"></div>
+            </div>
+            <div class="span2 client">
+                <div class="img client3"></div>
+            </div>
+        </div>
+    </div>
+</div>

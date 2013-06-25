@@ -1,0 +1,68 @@
+<%- model_class = Contact -%>
+<div class="page-header">
+  <h1>Contatos</h1>
+</div>
+
+<!-- Inicio Fieldset para fazer a pesquisa dos dados -->
+<fieldset style="border: 1px solid #CECECE; padding: 10px; margin-bottom: 10px;" class="item">
+  <h3>Pesquisar</h3>
+  </br>
+  <%= search_form_for @q, :html=>{:class=>"form-horizontal"} do |f| %>
+    <div class="control-group">
+        <%= f.label "Nome" %>
+        <%= f.text_field :name_cont, :class => 'span5' %>
+    </div>
+    <div class="control-group">
+        <%= f.label "Email" %>
+        <%= f.text_field :email_cont, :class => 'span4' %>
+    </div>
+    <%= f.submit "Pesquisar", :name => nil, :class=>"btn icon-search" %>
+    <%= link_to 'Limpar', contacts_path %>        
+  <% end %>
+</fieldset>
+<!-- Fim Fieldset para fazer a pesquisa dos dados -->
+
+<!-- Inicio Tabela de exibição dos dados -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:phone) %></th>
+      <th><%= model_class.human_attribute_name(:email) %></th>
+      <th><%= model_class.human_attribute_name(:subject) %></th>
+      <th><%= model_class.human_attribute_name(:message) %></th>
+      <th>Opções</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @contacts.each do |contact| %>
+      <tr>
+        <td><%= contact.name %></td>
+        <td><%= contact.phone %></td>
+        <td><%= contact.email %></td>
+        <td><%= contact.subject %></td>
+        <td><%= contact.message %></td>
+        <td>
+          <%= link_to 'Editar',
+                      edit_contact_path(contact), :class => 'btn btn-small icon-edit' %>
+          <%= link_to 'Excluir',
+                      contact_path(contact),
+                      :method => :delete,
+                      :confirm => 'Tem certeza que deseja excluir este contato?',
+                      :class => 'btn btn-small btn-danger icon-trash' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- Fim Tabela de exibição dos dados -->
+
+<!-- Paginação dos dados -->
+<div class="pagination">
+    <%= paginate @contacts %>
+</div>
+<!-- Fim Paginação dos dados -->
+
+<!-- Inicio Link para criar novo registro -->
+<%= link_to 'Novo Contato', new_contact_path, :class => 'btn btn-primary' %>
+<!-- Fim Link para criar novo registro -->

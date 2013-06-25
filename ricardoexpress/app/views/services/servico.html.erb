@@ -1,0 +1,22 @@
+<!-- Service Option 2 -->
+    <div id="service_2">
+        <div class="caixa">
+
+                <% servico = Service.find(params[:id]) %>
+                <% titulo = servico.title %>
+                <% conteudo = servico.description %>
+
+            <div class="row perk">
+                <div class="span2 circle circle1">
+                    <img src="img/service_ico1.png" alt="">
+                </div>
+
+                <div class="span10 description_wrapper">
+                    <h5><%= titulo %></h5>
+                    <p>
+                        <%= conteudo %>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,25 @@
+<%- model_class = About -%>
+<div class="page-header">
+  <h1>Empresa</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
+  <dd><%= @about.title %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:slug) %>:</strong></dt>
+  <dd><%= @about.slug %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @about.description %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to 'Voltar',
+              abouts_path, :class => 'btn icon-arrow-left'  %>
+  <%= link_to 'Editar',
+              edit_about_path(@about), :class => 'btn icon-edit' %>
+  <%= link_to 'Excluir',
+              about_path(@about),
+              :method => 'delete',
+              :confirm => 'Tem certeza que deseja excluir esta empresa?',
+              :class => 'btn btn-danger icon-trash' %>
+</div>

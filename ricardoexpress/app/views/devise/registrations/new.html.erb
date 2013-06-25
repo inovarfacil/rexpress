@@ -1,0 +1,28 @@
+<h2>Cadastrar usuário</h2>
+
+<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <% if alert != nil %>
+	    <div class="notification information png_bg">
+	      <div class="alert-login"><%= alert %></div>
+	    </div>
+    <% end %>  
+    <% if notice != nil %> 
+	    <div class="notification information png_bg">
+	      <div class="notice"><%= notice %></div>
+	    </div>
+    <% end %>
+    <p><%= f.input :email, :required => true, :autofocus => true %></p>
+    <p><%= f.input :password, :required => true %></p>
+    <p><%= f.input :password_confirmation, :required => true %></p>
+  </div>
+	<div>
+		<%= f.button :submit, "Cadastrar usuário", :class=>"button-login" %>
+	</div>
+	<div>
+		<%= render "devise/shared/links" %>
+	</div>
+
+<% end %>
